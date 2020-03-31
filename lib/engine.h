@@ -30,7 +30,6 @@
 #include <complex>
 #include <fstream>
 #include <locale>
-#include <codecvt>
 
 struct cvt: public std::codecvt<char, char, std::mbstate_t> {};
 
@@ -61,6 +60,7 @@ void check(const T & object, size_t size=sizeof(T), size_t alignment=type_aligno
 #include <chrono>
 #include <functional>
 #include <atomic>
+#include <codecvt>
 
 #endif
 
