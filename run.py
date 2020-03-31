@@ -65,9 +65,12 @@ def main():
 
     is_clang = "clang" in get_compiler()
     if is_clang:
-        stdlibs = ["libstdc++"]
+        if platform.system() == "Darwin":
+            stdlibs = ["libc++"]  # libstdc++ is deprecated!
+        else:
+            stdlibs = ["libc++", "libstdc++"]
     else:
-        stdlibs = ["libc++", "libstdc++"]
+        stdlibs = ["libstdc++"]
 
     for stdlib in stdlibs:
         for high_standard in sorted(supported_standards.keys()):
