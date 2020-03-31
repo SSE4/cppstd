@@ -75,6 +75,7 @@ C(std::array<int COMMA 10>);
 C(std::chrono::time_point<std::chrono::steady_clock>);
 C(std::function<void(int)>);
 C(std::atomic<int>);
+C(std::nullptr_t);
 
 #endif
 
@@ -89,6 +90,7 @@ C(std::byte);
 
 #ifdef HAS_FILESYSTEM
 C(std::filesystem::path);
+C(std::filesystem::file_time_type)
 #endif
 
 #ifdef HAS_OPTIONAL
