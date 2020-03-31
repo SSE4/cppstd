@@ -31,7 +31,15 @@
 #include <fstream>
 #include <locale>
 
+#ifdef HAS_CODECVT
+
 struct cvt: public std::codecvt<char, char, std::mbstate_t> {};
+
+#endif
+
+struct ioerr : public std::ios_base::failure {
+    ioerr() : std::ios_base::failure("") {}
+};
 
 #define COMMA ,
 
@@ -60,13 +68,15 @@ void check(const T & object, size_t size=sizeof(T), size_t alignment=type_aligno
 #include <chrono>
 #include <functional>
 #include <atomic>
-#include <codecvt>
 
+#endif
+
+#ifdef HAS_CODECVT
+#include <codecvt>
 #endif
 
 #ifdef HAS_CXX17
 
-#include <any>
 #include <variant>
 #include <shared_mutex>
 
@@ -82,6 +92,10 @@ void check(const T & object, size_t size=sizeof(T), size_t alignment=type_aligno
 
 #ifdef HAS_STRINGVIEW
 #include <string_view>
+#endif
+
+#ifdef HAS_ANY
+#include <any>
 #endif
 
 #ifdef HAS_CXX20

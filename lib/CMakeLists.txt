@@ -23,6 +23,20 @@ CHECK_CXX_SOURCE_COMPILES("
         }
 " HAS_STRINGVIEW1)
 
+CHECK_CXX_SOURCE_COMPILES("
+        #include <any>
+        int main() {
+        std::any p;
+        }
+" HAS_ANY1)
+
+CHECK_CXX_SOURCE_COMPILES("
+        #include <codecvt>
+        int main() {
+        typedef std::codecvt<char, char, std::mbstate_t> p;
+        }
+" HAS_CODECVT1)
+
 file(GLOB SOURCES *.cpp)
 file(GLOB HEADERS *.h)
 
@@ -40,6 +54,14 @@ endif()
 
 if(HAS_STRINGVIEW1)
     target_compile_definitions(engine PRIVATE "-DHAS_STRINGVIEW")
+endif()
+
+if(HAS_ANY1)
+    target_compile_definitions(engine PRIVATE "-DHAS_ANY")
+endif()
+
+if(HAS_CODECVT1)
+    target_compile_definitions(engine PRIVATE "-DHAS_CODECVT")
 endif()
 
 set_property(TARGET engine PROPERTY CXX_STANDARD ${STDHI})

@@ -50,7 +50,11 @@ C(std::ofstream);
 C(std::ios_base::Init);
 C(std::exception);
 C(std::locale);
+C(ioerr);
+
+#ifdef HAS_CODECVT
 C(cvt);
+#endif
 
 #ifdef HAS_CXX11
 
@@ -76,7 +80,6 @@ C(std::atomic<int>);
 
 #ifdef HAS_CXX17
 
-C(std::any);
 C(std::variant<int COMMA char>);
 C(std::shared_mutex);
 C(std::shared_timed_mutex);
@@ -94,6 +97,10 @@ C(std::optional<int>);
 
 #ifdef HAS_STRINGVIEW
 C(std::string_view);
+#endif
+
+#ifdef HAS_ANY
+C(std::any)
 #endif
 
 #ifdef HAS_CXX20
