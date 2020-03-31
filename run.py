@@ -87,6 +87,8 @@ def main():
                 definitions = dict()
                 definitions["STDHI"], definitions["GNUHI"] = get_definitions(high_standard)
                 definitions["STDLO"], definitions["GNULO"] = get_definitions(low_standard)
+                definitions["STDFLAGHI"] = supported_standards[high_standard]
+                definitions["STDFLAGLO"] = supported_standards[low_standard]
                 definitions["CMAKE_VERBOSE_MAKEFILE"] = "ON"
                 if is_clang:
                     stdlib_flag = "-stdlib=%s" % stdlib

@@ -26,6 +26,13 @@
 #include <set>
 #include <map>
 #include <memory>
+#include <bitset>
+#include <complex>
+#include <fstream>
+#include <locale>
+#include <codecvt>
+
+struct cvt: public std::codecvt<char, char, std::mbstate_t> {};
 
 #define COMMA ,
 
@@ -53,18 +60,28 @@ void check(const T & object, size_t size=sizeof(T), size_t alignment=type_aligno
 #include <array>
 #include <chrono>
 #include <functional>
+#include <atomic>
 
 #endif
 
 #ifdef HAS_CXX17
 
-#include <string_view>
-#include <optional>
 #include <any>
 #include <variant>
 #include <shared_mutex>
-//#include <filesystem>
 
+#endif
+
+#ifdef HAS_FILESYSTEM
+#include <filesystem>
+#endif
+
+#ifdef HAS_OPTIONAL
+#include <optional>
+#endif
+
+#ifdef HAS_STRINGVIEW
+#include <string_view>
 #endif
 
 #ifdef HAS_CXX20

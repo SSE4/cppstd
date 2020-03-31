@@ -5,7 +5,10 @@
 #endif
 
 C(std::string);
+C(std::wstring);
 C(std::stringstream);
+C(std::istringstream);
+C(std::ostringstream);
 C(std::pair<int COMMA bool>);
 C(std::pair<int COMMA std::pair<bool COMMA char> >);
 C(std::vector<bool>);
@@ -19,12 +22,35 @@ C(std::vector<int>::const_iterator);
 C(std::vector<int>::reverse_iterator);
 C(std::vector<int>::const_reverse_iterator);
 C(std::deque<int>);
+C(std::deque<int>::iterator);
+C(std::deque<int>::const_iterator);
+C(std::deque<int>::reverse_iterator);
+C(std::deque<int>::const_reverse_iterator);
 C(std::list<int>);
+C(std::list<int>::iterator);
+C(std::list<int>::const_iterator);
+C(std::list<int>::reverse_iterator);
+C(std::list<int>::const_reverse_iterator);
 C(std::set<int>);
+C(std::set<int>::iterator);
+C(std::set<int>::reverse_iterator);
 C(std::map<int COMMA char>);
+C(std::map<int COMMA char>::iterator);
+C(std::map<int COMMA char>::const_iterator);
 C(std::multiset<int>);
 C(std::multimap<int COMMA char>);
 C(std::allocator<int>);
+C(std::bitset<10>);
+C(std::complex<float>);
+C(std::complex<double>);
+C(std::complex<long double>);
+C(std::fstream);
+C(std::ifstream);
+C(std::ofstream);
+C(std::ios_base::Init);
+C(std::exception);
+C(std::locale);
+C(cvt);
 
 #ifdef HAS_CXX11
 
@@ -44,20 +70,30 @@ C(std::unique_ptr<int>);
 C(std::array<int COMMA 10>);
 C(std::chrono::time_point<std::chrono::steady_clock>);
 C(std::function<void(int)>);
+C(std::atomic<int>);
 
 #endif
 
 #ifdef HAS_CXX17
 
-C(std::string_view);
-C(std::optional<int>);
 C(std::any);
 C(std::variant<int COMMA char>);
 C(std::shared_mutex);
 C(std::shared_timed_mutex);
-//C(std::filesystem::path);
 C(std::byte);
 
+#endif
+
+#ifdef HAS_FILESYSTEM
+C(std::filesystem::path);
+#endif
+
+#ifdef HAS_OPTIONAL
+C(std::optional<int>);
+#endif
+
+#ifdef HAS_STRINGVIEW
+C(std::string_view);
 #endif
 
 #ifdef HAS_CXX20
