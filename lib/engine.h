@@ -25,6 +25,7 @@
 #include <list>
 #include <set>
 #include <map>
+#include <memory>
 
 #define COMMA ,
 
@@ -51,6 +52,7 @@ void check(const T & object, size_t size=sizeof(T), size_t alignment=type_aligno
 #include <memory>
 #include <array>
 #include <chrono>
+#include <functional>
 
 #endif
 

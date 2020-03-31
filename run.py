@@ -21,10 +21,17 @@ class chdir(object):
         os.chdir(self._old_dir)
 
 
+def get_compiler():
+    if "CXX" in os.environ:
+        compiler = os.environ["CXX"]
+    else:
+        compiler = "clang++" if platform.system() == "Darwin" else "g++"
+    return compiler
+
+
 def check_standard(flags):
-    compiler = "clang++" if platform.system() == "Darwin" else "g++"
     for flag in flags:
-        command = [compiler, flag, "-dM", "-E", "-x", "c++", "/dev/null"]
+        command = [get_compiler(), flag, "-dM", "-E", "-x", "c++", "/dev/null"]
         try:
             print('running "%s"' % " ".join(command))
             subprocess.check_output(command)
@@ -56,41 +63,54 @@ def main():
 
     print(supported_standards)
 
-    for high_standard in sorted(supported_standards.keys()):
-        for low_standard in sorted(supported_standards.keys()):
-            if low_standard >= high_standard:
-                continue
-            print(low_standard, high_standard)
+    is_clang = "clang" in get_compiler()
+    if is_clang:
+        stdlibs = ["libstdc++"]
+    else:
+        stdlibs = ["libc++", "libstdc++"]
 
-            def get_definitions(standard):
-                flag = supported_standards[standard]
-                gnu = "ON" if "gnu" in flag else "OFF"
-                return standard % 100, gnu
+    for stdlib in stdlibs:
+        for high_standard in sorted(supported_standards.keys()):
+            for low_standard in sorted(supported_standards.keys()):
+                if low_standard >= high_standard:
+                    continue
+                print(low_standard, high_standard)
 
-            definitions = dict()
-            definitions["STDHI"], definitions["GNUHI"] = get_definitions(high_standard)
-            definitions["STDLO"], definitions["GNULO"] = get_definitions(low_standard)
-            definitions["CMAKE_VERBOSE_MAKEFILE"] = "ON"
+                def get_definitions(standard):
+                    flag = supported_standards[standard]
+                    gnu = "ON" if "gnu" in flag else "OFF"
+                    return standard % 100, gnu
 
-            cmake_dir = ".%s_%s" % (low_standard, high_standard)
-            if os.path.isdir(cmake_dir):
-                shutil.rmtree(cmake_dir)
-            os.makedirs(cmake_dir)
+                definitions = dict()
+                definitions["STDHI"], definitions["GNUHI"] = get_definitions(high_standard)
+                definitions["STDLO"], definitions["GNULO"] = get_definitions(low_standard)
+                definitions["CMAKE_VERBOSE_MAKEFILE"] = "ON"
+                if is_clang:
+                    stdlib_flag = "-stdlib=%s" % stdlib
+                    definitions["CMAKE_CXX_FLAGS"] = stdlib_flag
+                    definitions["CMAKE_MODULE_LINKER_FLAGS"] = stdlib_flag
+                    definitions["CMAKE_SHARED_LINKER_FLAGS"] = stdlib_flag
+                    definitions["CMAKE_EXE_LINKER_FLAGS"] = stdlib_flag
 
-            with chdir(cmake_dir):
-                command = ["cmake", "..", "-Wno-dev"]
-                for name, value in definitions.items():
-                    command.append("-D%s=%s" % (name, value))
-                print('running "%s"' % " ".join(command))
-                subprocess.check_call(command)
+                cmake_dir = ".%s_%s" % (low_standard, high_standard)
+                if os.path.isdir(cmake_dir):
+                    shutil.rmtree(cmake_dir)
+                os.makedirs(cmake_dir)
 
-                command = ["cmake", "--build", "."]
-                print('running "%s"' % " ".join(command))
-                subprocess.check_call(command)
+                with chdir(cmake_dir):
+                    command = ["cmake", "..", "-Wno-dev"]
+                    for name, value in definitions.items():
+                        command.append("-D%s=%s" % (name, value))
+                    print('running "%s"' % " ".join(command))
+                    subprocess.check_call(command)
 
-                command = [os.path.join(os.getcwd(), "app", "example")]
-                print('running "%s"' % " ".join(command))
-                subprocess.check_call(command)
+                    command = ["cmake", "--build", "."]
+                    print('running "%s"' % " ".join(command))
+                    subprocess.check_call(command)
+
+                    command = [os.path.join(os.getcwd(), "app", "example")]
+                    print('running "%s"' % " ".join(command))
+                    subprocess.check_call(command)
 
 
 if __name__ == '__main__':
