@@ -93,7 +93,7 @@ C(std::filesystem::file_time_type)
 #endif
 
 #ifdef HAS_OPTIONAL
-C(std::optional<int>);
+//C(std::optional<int>);
 #endif
 
 #ifdef HAS_STRINGVIEW
