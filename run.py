@@ -57,9 +57,9 @@ def main():
     supported_standards = dict()
 
     if os.name == 'nt':
-        supported_standards['1998'] = ''
-        supported_standards['2014'] = '/std:c++14'
-        supported_standards['2017'] = '/std:c++17'
+        supported_standards[1998] = ''
+        supported_standards[2014] = '/std:c++14'
+        supported_standards[2017] = '/std:c++17'
     else:
         for standard, flags in standards.items():
             flag = check_standard(flags)
