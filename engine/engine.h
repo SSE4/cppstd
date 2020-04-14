@@ -86,7 +86,7 @@ void check(const T & object, size_t size=sizeof(T), size_t alignment=type_aligno
 #endif
 
 #ifdef HAS_OPTIONAL
-#include <optional>
+//#include <optional>
 #endif
 
 #ifdef HAS_STRINGVIEW
