@@ -113,7 +113,7 @@ def main():
                     print('running "%s"' % " ".join(command))
                     subprocess.check_call(command)
 
-                    command = [os.path.join(os.getcwd(), "app", "example")]
+                    command = [os.path.join(os.getcwd(), "example", "example")]
                     print('running "%s"' % " ".join(command))
                     subprocess.check_call(command)
 
