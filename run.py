@@ -121,9 +121,17 @@ def main():
                     print('running "%s"' % " ".join(command))
                     subprocess.check_call(command)
 
-                    command = [os.path.join(os.getcwd(), "example", "example")]
-                    print('running "%s"' % " ".join(command))
-                    subprocess.check_call(command)
+                    old_path = os.environ["PATH"]
+                    try:
+                        if os.name == 'nt':
+                            os.environ["PATH"] += os.pathsep + os.path.join(os.getcwd(), "engine", "Debug")
+                            command = [os.path.join(os.getcwd(), "example", "Debug", "example.exe")]
+                        else:
+                            command = [os.path.join(os.getcwd(), "example", "example")]
+                        print('running "%s"' % " ".join(command))
+                        subprocess.check_call(command)
+                    finally:
+                        os.environ["PATH"] = old_path
 
 
 if __name__ == '__main__':
