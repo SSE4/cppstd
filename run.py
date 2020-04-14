@@ -56,10 +56,15 @@ def main():
 
     supported_standards = dict()
 
-    for standard, flags in standards.items():
-        flag = check_standard(flags)
-        if flag:
-            supported_standards[standard] = flag
+    if os.name == 'nt':
+        supported_standards['1998'] = ''
+        supported_standards['2014'] = '/std:c++14'
+        supported_standards['2017'] = '/std:c++17'
+    else:
+        for standard, flags in standards.items():
+            flag = check_standard(flags)
+            if flag:
+                supported_standards[standard] = flag
 
     print(supported_standards)
 
@@ -69,6 +74,8 @@ def main():
             stdlibs = ["libc++"]  # libstdc++ is deprecated!
         else:
             stdlibs = ["libc++", "libstdc++"]
+    elif os.name == 'nt':
+        stdlibs = [""]
     else:
         stdlibs = ["libstdc++"]
 
