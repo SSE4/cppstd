@@ -37,6 +37,13 @@ CHECK_CXX_SOURCE_COMPILES("
         }
 " HAS_CODECVT1)
 
+CHECK_CXX_SOURCE_COMPILES("
+        #include <variant>
+        int main() {
+        std::variant<int, bool> p;
+        }
+" HAS_VARIANT1)
+
 file(GLOB SOURCES *.cpp)
 file(GLOB HEADERS *.h)
 
@@ -62,6 +69,10 @@ endif()
 
 if(HAS_CODECVT1)
     target_compile_definitions(engine PRIVATE "-DHAS_CODECVT")
+endif()
+
+if(HAS_VARIANT1)
+    target_compile_definitions(engine PRIVATE "-DHAS_VARIANT1")
 endif()
 
 set_property(TARGET engine PROPERTY CXX_STANDARD ${STDHI})

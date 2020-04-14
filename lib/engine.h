@@ -77,7 +77,6 @@ void check(const T & object, size_t size=sizeof(T), size_t alignment=type_aligno
 
 #ifdef HAS_CXX17
 
-#include <variant>
 #include <shared_mutex>
 
 #endif
@@ -96,6 +95,10 @@ void check(const T & object, size_t size=sizeof(T), size_t alignment=type_aligno
 
 #ifdef HAS_ANY
 #include <any>
+#endif
+
+#ifdef HAS_VARIANT
+#include <variant>
 #endif
 
 #ifdef HAS_CXX20

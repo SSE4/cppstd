@@ -81,7 +81,6 @@ C(std::nullptr_t);
 
 #ifdef HAS_CXX17
 
-C(std::variant<int COMMA char>);
 C(std::shared_mutex);
 C(std::shared_timed_mutex);
 C(std::byte);
@@ -103,6 +102,10 @@ C(std::string_view);
 
 #ifdef HAS_ANY
 C(std::any)
+#endif
+
+#ifdef HAS_VARIANT
+C(std::variant<int COMMA char>);
 #endif
 
 #ifdef HAS_CXX20

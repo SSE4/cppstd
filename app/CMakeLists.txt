@@ -37,6 +37,13 @@ CHECK_CXX_SOURCE_COMPILES("
         }
 " HAS_CODECVT2)
 
+CHECK_CXX_SOURCE_COMPILES("
+        #include <variant>
+        int main() {
+        std::variant<int, bool> p;
+        }
+" HAS_VARIANT2)
+
 file(GLOB SOURCES *.cpp)
 file(GLOB HEADERS *.h)
 
@@ -60,6 +67,10 @@ endif()
 
 if(HAS_CODECVT2)
     target_compile_definitions(example PRIVATE "-DHAS_CODECVT")
+endif()
+
+if(HAS_VARIANT2)
+    target_compile_definitions(example PRIVATE "-DHAS_VARIANT1")
 endif()
 
 target_link_libraries(example PRIVATE engine)
