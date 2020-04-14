@@ -97,6 +97,7 @@ def main():
                 definitions["STDFLAGHI"] = supported_standards[high_standard]
                 definitions["STDFLAGLO"] = supported_standards[low_standard]
                 definitions["CMAKE_VERBOSE_MAKEFILE"] = "ON"
+                definitions["CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS"] = "ON"
                 if is_clang:
                     stdlib_flag = "-stdlib=%s" % stdlib
                     definitions["CMAKE_CXX_FLAGS"] = stdlib_flag
