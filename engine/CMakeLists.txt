@@ -10,6 +10,7 @@ CHECK_CXX_SOURCE_COMPILES("
 " HAS_FILESYSTEM1)
 
 CHECK_CXX_SOURCE_COMPILES("
+        #include <functional>
         #include <optional>
         int main() {
         std::optional<int> p;
